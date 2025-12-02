@@ -12,20 +12,20 @@ export const TianZiGe: React.FC<TianZiGeProps> = ({ size, className = '', childr
   // If variant is 'print', we force high-contrast colors immediately.
   const isPrint = variant === 'print';
   
-  // Explicitly use border-solid for html2canvas compatibility
-  // Using !important via inline styles or specific classes to ensure it's picked up
+  // Explicitly use border-solid and !important to force html2canvas to render it
   const containerBase = `relative box-border border-2`;
   
-  // For print: Use explicit bg-white instead of transparent to avoid alpha issues in PDF.
+  // For print: Use explicit bg-white instead of transparent.
+  // We use inline styles for the border colors to ensure they override any utility class specificity issues in the canvas.
   const containerColors = isPrint 
-    ? `bg-white border-red-600` 
-    : `bg-red-50/50 border-red-500 print:border-red-600 print:bg-transparent`;
+    ? `bg-white` 
+    : `bg-red-50/50 border-red-500`;
 
   // Grid line styles
   const lineBase = `absolute transform opacity-60`;
   const lineColors = isPrint
-    ? `bg-red-600 border-red-600 opacity-100 border-solid` 
-    : `bg-red-300 border-red-300 print:opacity-100 print:bg-red-600 print:border-red-600`;
+    ? `bg-red-600 border-red-600 opacity-100` 
+    : `bg-red-300 border-red-300`;
 
   return (
     <div 
@@ -33,7 +33,8 @@ export const TianZiGe: React.FC<TianZiGeProps> = ({ size, className = '', childr
       style={{ 
         width: size, 
         height: size,
-        borderStyle: 'solid' // Force solid border style for canvas
+        borderStyle: 'solid',
+        borderColor: isPrint ? '#dc2626' : undefined // red-600 hex
       }}
     >
       {/* Background Grid Lines */}
@@ -41,12 +42,20 @@ export const TianZiGe: React.FC<TianZiGeProps> = ({ size, className = '', childr
         {/* Horizontal Center Line */}
         <div 
           className={`top-1/2 left-0 w-full h-px border-t border-dashed -translate-y-1/2 ${lineBase} ${lineColors}`}
-          style={{ borderTopStyle: 'dashed', borderTopWidth: '1px' }}
+          style={{ 
+              borderTopStyle: 'dashed', 
+              borderTopWidth: '1px',
+              borderColor: isPrint ? '#dc2626' : undefined
+          }}
         ></div>
         {/* Vertical Center Line */}
         <div 
           className={`left-1/2 top-0 h-full w-px border-l border-dashed -translate-x-1/2 ${lineBase} ${lineColors}`}
-          style={{ borderLeftStyle: 'dashed', borderLeftWidth: '1px' }}
+          style={{ 
+              borderLeftStyle: 'dashed', 
+              borderLeftWidth: '1px',
+              borderColor: isPrint ? '#dc2626' : undefined
+          }}
         ></div>
       </div>
       

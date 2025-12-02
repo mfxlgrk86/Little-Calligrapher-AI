@@ -24,66 +24,26 @@
         font-family: 'Zcool XiaoWei', serif;
       }
       
-      /* 
-         PDF EXPORT STYLES 
-      */
-      #print-layer {
-        display: none;
-      }
-
-      #print-layer.show-for-export {
-        display: block !important;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        min-height: 100vh;
-        background-color: white !important;
-        z-index: 99999; /* Force on top of everything */
-        pointer-events: none;
-      }
-
-      /* Native Browser Print Styles (CMD+P fallback) */
-      @media print {
-        body {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-          background-color: white !important;
-        }
-        
-        @page {
-          size: A4 portrait;
-          margin: 1cm;
-        }
-
-        /* Hide the interactive app */
-        #app-root {
-          display: none !important;
-        }
-
-        /* Show the worksheet */
-        #print-layer {
-          display: block !important;
-          position: static !important;
-          width: 100% !important;
-          height: auto !important;
-        }
+      /* PDF Export & Print Helpers */
+      .print-page-container {
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
     </style>
-  <script type="importmap">
+  <script type="module" src="/index.tsx"></script>
+<script type="importmap">
 {
   "imports": {
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

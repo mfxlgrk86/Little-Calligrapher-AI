@@ -46,23 +46,26 @@ export default function App() {
     }
 
     setIsExporting(true);
-    // CRITICAL: Scroll to top to ensure html2canvas starts capturing from (0,0)
+    // Hide scrollbars to ensure clean capture
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    
+    // Scroll to top to ensure no offset issues
     window.scrollTo(0, 0);
 
-    // Increase delay to 1000ms to allow fonts to load and the overlay to fully paint
+    // Wait for the view to switch and render
     setTimeout(async () => {
       try {
         const element = printRef.current;
         const opt = {
-          margin:       10, // mm
+          margin:       0, // We handle margins inside the container
           filename:     'practice-sheet.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { 
             scale: 2, 
             useCORS: true, 
-            letterRendering: true, 
-            scrollY: 0, 
-            windowWidth: 1200 // Force desktop width to ensure layout is correct
+            scrollY: 0,
+            // Important: Do not set windowWidth here if we want it to capture the element's natural flow
           },
           jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
           pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
@@ -75,25 +78,26 @@ export default function App() {
         alert("Could not generate PDF. Please try again.");
       } finally {
         setIsExporting(false);
+        document.body.style.overflow = originalOverflow;
       }
     }, 1000);
   };
 
   return (
     <>
-      {/* --- PRINT / PDF EXPORT LAYOUT --- */}
+      {/* --- PRINT / PDF EXPORT VIEW --- */}
       {/* 
-         This div corresponds to #print-layer in index.html.
-         It is hidden by default. When isExporting is true, it gets the class 'show-for-export'
-         which makes it visible, absolute, and on top.
+         Exclusive View Strategy:
+         When exporting, we hide the main app and ONLY show this container.
+         This guarantees html2canvas sees a clean DOM with no stacking context issues.
+         The container is sized to A4 (210mm width).
       */}
       <div 
-        id="print-layer"
-        ref={printRef} 
-        className={isExporting ? 'show-for-export' : ''}
+        ref={printRef}
+        className={`${isExporting ? 'block' : 'hidden'} min-h-screen bg-white flex justify-center`}
       >
-        <div className="w-full bg-white text-black p-8 min-h-[297mm]">
-          <div className="text-center mb-8 border-b-2 border-stone-800 pb-4">
+        <div className="w-[210mm] bg-white text-black p-[10mm] print-page-container">
+          <div className="text-center mb-8 border-b-2 border-black pb-4">
              <h1 className="text-3xl font-kaiti font-bold mb-2 text-black">汉字书写练习 Chinese Writing Practice</h1>
              <p className="text-stone-500 text-sm">Created with Little Calligrapher AI</p>
           </div>
@@ -103,10 +107,14 @@ export default function App() {
               <div key={idx} className="flex items-end justify-start gap-2 break-inside-avoid page-break-inside-avoid">
                  {/* First box: Exemplar */}
                  <div className="flex flex-col items-center mr-2 min-w-[70px]">
-                     <span className="text-xl font-sans mb-1 text-stone-600">{data.pinyin}</span>
-                     {/* Force variant="print" */}
-                     <TianZiGe size={70} variant="print" className="!border-red-600">
-                        <span className="font-kaiti text-5xl leading-[70px] text-center w-full h-full block text-black">{data.char}</span>
+                     <span className="text-xl font-sans mb-1 text-black font-bold">{data.pinyin}</span>
+                     <TianZiGe size={70} variant="print">
+                        {/* 
+                           Fixed vertical alignment for PDF: 
+                           Removed leading-[70px] which forced baseline alignment (often low for Kaiti fonts).
+                           Used flex centering + slight negative translate to visual center it.
+                        */}
+                        <span className="font-kaiti text-5xl text-black leading-none transform -translate-y-1.5">{data.char}</span>
                      </TianZiGe>
                  </div>
                  
@@ -129,7 +137,8 @@ export default function App() {
       </div>
 
       {/* --- SCREEN LAYOUT --- */}
-      <div id="app-root" className="min-h-screen bg-[#faf8f5] text-stone-800 pb-20">
+      {/* Hidden during export to prevent interference */}
+      <div id="app-root" className={`${isExporting ? 'hidden' : 'block'} min-h-screen bg-[#faf8f5] text-stone-800 pb-20`}>
         <header className="bg-white border-b border-stone-100 sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-2">
