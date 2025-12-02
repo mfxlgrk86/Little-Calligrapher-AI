@@ -1,0 +1,7 @@
+{
+  "name": "Little Calligrapher AI",
+  "description": "A smart Chinese handwriting practice app for kids. Generate practice sheets, view stroke orders, and get AI feedback on your handwriting.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
