@@ -1,6 +1,6 @@
 {
-  "name": "Little Calligrapher AI",
-  "description": "A smart Chinese handwriting practice app for kids. Generate practice sheets, view stroke orders, and get AI feedback on your handwriting.",
+  "name": "小小书法家 AI",
+  "description": "专为儿童设计的智能汉字书写练习应用。自动生成田字格练习单，演示笔画顺序，并提供 AI 书写评分反馈。",
   "requestFramePermissions": [
     "microphone"
   ]

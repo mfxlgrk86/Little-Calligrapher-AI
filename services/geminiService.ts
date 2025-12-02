@@ -10,7 +10,7 @@ export const generatePracticeContent = async (topic: string): Promise<CharacterD
   const model = "gemini-2.5-flash";
   
   const prompt = `Generate a list of 4-8 Chinese characters suitable for a child to practice writing based on the topic: "${topic}".
-  For each character, provide the Pinyin and a very short, simple definition (in Chinese) suitable for a 6-year-old.
+  For each character, provide the Pinyin and a very short, simple definition (in Simplified Chinese) suitable for a 6-year-old.
   Return a JSON array.`;
 
   try {
@@ -27,7 +27,7 @@ export const generatePracticeContent = async (topic: string): Promise<CharacterD
             properties: {
               char: { type: Type.STRING, description: "The single Chinese character" },
               pinyin: { type: Type.STRING, description: "The Pinyin with tone marks" },
-              definition: { type: Type.STRING, description: "A very short definition for kids" }
+              definition: { type: Type.STRING, description: "A very short definition in Chinese for kids" }
             },
             required: ["char", "pinyin"]
           }
@@ -50,7 +50,8 @@ export const getPinyinForText = async (text: string): Promise<CharacterData[]> =
   
   const model = "gemini-2.5-flash";
   const prompt = `Identify the Chinese characters in this text: "${text}".
-  Return a JSON array where each item contains the character and its Pinyin. Ignore punctuation.`;
+  Return a JSON array where each item contains the character and its Pinyin. Ignore punctuation.
+  For the definition, provide a very brief meaning in Chinese suitable for children.`;
 
   try {
     const ai = getAiClient();
@@ -98,7 +99,7 @@ export const gradeHandwriting = async (char: string, imageBase64: string): Promi
             1. Give me a star rating from 1 to 5.
             2. Tell me one thing I did well.
             3. Tell me one specific stroke I can improve (e.g., "The horizontal line should be straighter").
-            Keep the tone encouraging, friendly, and suitable for a child. Be brief.`
+            Reply in Simplified Chinese. Keep the tone encouraging, friendly, and suitable for a child. Be brief.`
           },
           {
             inlineData: {
@@ -110,10 +111,10 @@ export const gradeHandwriting = async (char: string, imageBase64: string): Promi
       }
     });
 
-    return response.text || "Keep practicing! You are doing great!";
+    return response.text || "继续加油！你写得很棒！";
   } catch (error) {
     console.error("Gemini grading error:", error);
-    return "Oops, I couldn't see your writing clearly. Try again!";
+    return "哎呀，我看不太清，请再试一次！";
   }
 };
 

@@ -190,7 +190,7 @@ export const WriterBox: React.FC<WriterBoxProps> = ({ char, pinyin, definition, 
         <button 
           onClick={playSound}
           className="p-1.5 hover:bg-stone-100 rounded-full text-stone-400 transition-colors"
-          title="Read Aloud"
+          title="朗读"
         >
           <Volume2 size={16} />
         </button>
@@ -209,7 +209,7 @@ export const WriterBox: React.FC<WriterBoxProps> = ({ char, pinyin, definition, 
             className="mt-1 text-xs flex items-center gap-1 text-blue-500 hover:text-blue-600 font-medium"
            >
              <RefreshCw size={12} className={isAnimating ? "animate-spin" : ""} />
-             Show Stroke Order
+             演示笔画
            </button>
         </div>
 
@@ -234,7 +234,7 @@ export const WriterBox: React.FC<WriterBoxProps> = ({ char, pinyin, definition, 
              <button 
               onClick={clearCanvas}
               className="text-xs flex items-center gap-1 text-stone-400 hover:text-red-500"
-              title="Clear"
+              title="清除"
             >
               <Eraser size={14} />
             </button>
@@ -242,14 +242,14 @@ export const WriterBox: React.FC<WriterBoxProps> = ({ char, pinyin, definition, 
               onClick={handleGrade}
               disabled={isGrading}
               className="text-xs flex items-center gap-1 text-emerald-500 hover:text-emerald-600 font-bold"
-              title="Grade my writing"
+              title="AI 评分"
             >
               {isGrading ? (
-                <span className="animate-pulse">Checking...</span>
+                <span className="animate-pulse">评分中...</span>
               ) : (
                 <>
                   <CheckCircle size={14} />
-                  Check
+                  AI 评分
                 </>
               )}
             </button>
@@ -262,7 +262,7 @@ export const WriterBox: React.FC<WriterBoxProps> = ({ char, pinyin, definition, 
         {feedback ? (
           <div className="bg-yellow-50 text-yellow-800 p-2 rounded-lg text-sm border border-yellow-100 animate-in fade-in slide-in-from-bottom-2">
             <div className="flex items-center justify-center gap-1 mb-1 font-bold">
-               <Star size={14} className="fill-yellow-500 text-yellow-500"/> AI Feedback
+               <Star size={14} className="fill-yellow-500 text-yellow-500"/> AI 点评
             </div>
             {feedback}
           </div>

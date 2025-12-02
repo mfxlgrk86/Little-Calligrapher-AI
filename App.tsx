@@ -6,10 +6,10 @@ import { CharacterData } from './types';
 import { Sparkles, PenTool, BookOpen, Cat, Sun, Type, Download, FileText } from 'lucide-react';
 
 const SUGGESTED_TOPICS = [
-  { icon: <Sun size={18} />, label: 'Seasons (四季)', value: 'Words related to Spring, Summer, Autumn, Winter' },
-  { icon: <Cat size={18} />, label: 'Animals (动物)', value: 'Common animals like Cat, Dog, Panda' },
-  { icon: <BookOpen size={18} />, label: 'School (学校)', value: 'Things found in school' },
-  { icon: <Sparkles size={18} />, label: 'Colors (颜色)', value: 'Basic colors' },
+  { icon: <Sun size={18} />, label: '四季', value: '关于春夏秋冬的文字' },
+  { icon: <Cat size={18} />, label: '动物', value: '常见的动物，如猫、狗、熊猫' },
+  { icon: <BookOpen size={18} />, label: '学校', value: '学校里常见的物品' },
+  { icon: <Sparkles size={18} />, label: '颜色', value: '基本的颜色' },
 ];
 
 export default function App() {
@@ -41,7 +41,7 @@ export default function App() {
   const handleExportPDF = () => {
     if (!printRef.current) return;
     if (!(window as any).html2pdf) {
-      alert("PDF generator is loading. Please try again in a moment.");
+      alert("PDF 生成器加载中，请稍后再试。");
       return;
     }
 
@@ -75,7 +75,7 @@ export default function App() {
         await window.html2pdf().set(opt).from(element).save();
       } catch (err) {
         console.error("PDF Export failed", err);
-        alert("Could not generate PDF. Please try again.");
+        alert("无法生成 PDF，请重试。");
       } finally {
         setIsExporting(false);
         document.body.style.overflow = originalOverflow;
@@ -98,8 +98,8 @@ export default function App() {
       >
         <div className="w-[210mm] bg-white text-black p-[10mm] print-page-container">
           <div className="text-center mb-8 border-b-2 border-black pb-4">
-             <h1 className="text-3xl font-kaiti font-bold mb-2 text-black">汉字书写练习 Chinese Writing Practice</h1>
-             <p className="text-stone-500 text-sm">Created with Little Calligrapher AI</p>
+             <h1 className="text-3xl font-kaiti font-bold mb-2 text-black">汉字书写练习</h1>
+             <p className="text-stone-500 text-sm">小小书法家 AI 制作</p>
           </div>
           
           <div className="flex flex-col gap-6">
@@ -129,7 +129,7 @@ export default function App() {
             
             {characters.length === 0 && (
               <div className="text-center text-gray-400 mt-20 p-10 border-2 border-dashed border-gray-200 rounded-xl">
-                <p className="text-xl">Practice sheet is empty.</p>
+                <p className="text-xl">练习单是空的。</p>
               </div>
             )}
           </div>
@@ -145,11 +145,11 @@ export default function App() {
               <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white font-serif font-bold text-xl shadow-sm">
                 文
               </div>
-              <h1 className="text-xl font-bold text-stone-800 tracking-tight">Little Calligrapher AI</h1>
+              <h1 className="text-xl font-bold text-stone-800 tracking-tight">小小书法家 AI</h1>
             </div>
             <div className="flex items-center gap-2">
               <div className="text-xs font-medium px-3 py-1 bg-green-50 text-green-700 rounded-full border border-green-100">
-                 Ready to Practice
+                 准备练习
               </div>
             </div>
           </div>
@@ -160,9 +160,9 @@ export default function App() {
           {/* Intro / Welcome */}
           {!characters.length && !loading && (
             <div className="text-center mb-12 mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <h2 className="text-4xl font-handwriting text-stone-700 mb-4">Let's write beautiful Chinese characters!</h2>
+              <h2 className="text-4xl font-handwriting text-stone-700 mb-4">一起来写漂亮的汉字吧！</h2>
               <p className="text-stone-400 max-w-md mx-auto">
-                Enter any text to get started, or ask the Magic AI to create a practice sheet for you.
+                输入任意文字开始练习，或者让 AI 帮你生成练习单。
               </p>
             </div>
           )}
@@ -174,14 +174,14 @@ export default function App() {
                 onClick={() => setActiveTab('custom')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === 'custom' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-500 hover:text-stone-700'}`}
                >
-                 Custom Text
+                 自定义文字
                </button>
                <button 
                 onClick={() => setActiveTab('ai')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 ${activeTab === 'ai' ? 'bg-white shadow-sm text-blue-600' : 'text-stone-500 hover:text-stone-700'}`}
                >
                  <Sparkles size={14} />
-                 Magic Generator
+                 智能生成
                </button>
             </div>
 
@@ -191,7 +191,7 @@ export default function App() {
                   type="text" 
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Enter characters here (e.g. 你好世界)"
+                  placeholder="在此输入汉字 (例如：你好世界)"
                   className="flex-1 text-lg p-4 rounded-xl border-2 border-transparent bg-stone-50 focus:bg-white focus:border-red-300 focus:outline-none transition-all placeholder:text-stone-300"
                 />
                 <button 
@@ -199,12 +199,12 @@ export default function App() {
                   disabled={loading || !inputText}
                   className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-md shadow-red-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none"
                 >
-                  {loading ? 'Generating...' : 'Start'}
+                  {loading ? '生成中...' : '开始'}
                 </button>
               </form>
             ) : (
               <div className="p-2">
-                <p className="text-center text-stone-400 text-sm mb-4">Pick a topic and I'll make a worksheet for you!</p>
+                <p className="text-center text-stone-400 text-sm mb-4">选择一个主题，我为你生成练习单！</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {SUGGESTED_TOPICS.map((topic) => (
                     <button
@@ -220,7 +220,7 @@ export default function App() {
                     </button>
                   ))}
                 </div>
-                {loading && <div className="text-center mt-4 text-blue-500 text-sm animate-pulse">Designing your worksheet...</div>}
+                {loading && <div className="text-center mt-4 text-blue-500 text-sm animate-pulse">正在设计练习单...</div>}
               </div>
             )}
           </div>
@@ -231,7 +231,7 @@ export default function App() {
                <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-bold text-stone-700 flex items-center gap-2">
                     <PenTool className="text-red-400"/>
-                    Practice Sheet
+                    练习单
                   </h3>
                   <div className="flex gap-3">
                     <button
@@ -242,12 +242,12 @@ export default function App() {
                       {isExporting ? (
                          <>
                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                           Generating...
+                           生成中...
                          </>
                       ) : (
                          <>
                            <Download size={18} />
-                           Export PDF
+                           导出 PDF
                          </>
                       )}
                     </button>
@@ -255,7 +255,7 @@ export default function App() {
                       onClick={() => { setCharacters([]); setInputText(''); }}
                       className="text-stone-400 hover:text-red-500 text-sm underline underline-offset-4 px-2"
                     >
-                      Clear All
+                      清空
                     </button>
                   </div>
                </div>
@@ -292,8 +292,8 @@ export default function App() {
           <div className="fixed inset-0 bg-black/50 z-[10000] flex items-center justify-center">
              <div className="bg-white p-6 rounded-2xl flex flex-col items-center animate-in fade-in zoom-in-95">
                 <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <p className="text-lg font-bold text-stone-700">Generating Practice Sheet...</p>
-                <p className="text-sm text-stone-500">Please wait while we create your PDF</p>
+                <p className="text-lg font-bold text-stone-700">正在生成练习单...</p>
+                <p className="text-sm text-stone-500">请稍候，正在生成 PDF 文件</p>
              </div>
           </div>
         )}
