@@ -99,7 +99,7 @@ export default function App() {
         <div className="w-[210mm] bg-white text-black p-[10mm] print-page-container">
           <div className="text-center mb-8 border-b-2 border-black pb-4">
              <h1 className="text-3xl font-kaiti font-bold mb-2 text-black">汉字书写练习</h1>
-             <p className="text-stone-500 text-sm">小小书法家 AI 制作</p>
+             <p className="text-stone-500 text-sm">小小书法家制作</p>
           </div>
           
           <div className="flex flex-col gap-6">
@@ -145,7 +145,7 @@ export default function App() {
               <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white font-serif font-bold text-xl shadow-sm">
                 文
               </div>
-              <h1 className="text-xl font-bold text-stone-800 tracking-tight">小小书法家 AI</h1>
+              <h1 className="text-xl font-bold text-stone-800 tracking-tight">小小书法家</h1>
             </div>
             <div className="flex items-center gap-2">
               <div className="text-xs font-medium px-3 py-1 bg-green-50 text-green-700 rounded-full border border-green-100">
